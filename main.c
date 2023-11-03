@@ -1,27 +1,33 @@
 #include "main.h"
+/**
+ * excute - excutes the programm
+ * @arr: array containing command
+ *
+ * Return: void
+ */
 
-void excute (char **arr)
+void excute(char **arr)
 {
-        pid_t child;
-        int status, j;
+	pid_t child;
+	int status, j;
 
-        child = fork();
-        if (child == 0)
-        {
-                execve(arr[0], arr, NULL);
+	child = fork();
+	if (child == 0)
+	{
+		execve(arr[0], arr, NULL);
 		write(1, "\n", 1);
-        }
-        else
-        {
-                wait(&status);
-        }
+	}
+	else
+	{
+		wait(&status);
+	}
 	for (j = 0; arr[j] != NULL; j++)
 		free(arr[j]);
-        free(arr);
+	free(arr);
 }
 /**
  * main - main code
- * 
+ *
  * Return: 0
  */
 
@@ -50,7 +56,6 @@ int main(void)
 		arr[i] = NULL;
 		excute(arr);
 		i = 0;
-		write(1, "\n", 1);
 	}
 	free(line);
 	return (0);
