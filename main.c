@@ -7,7 +7,7 @@
  * Return: void
  */
 
-void excute(char **arr, char *error)
+void excute(char **arr,char *error)
 {
 	pid_t child;
 	int status, j;
@@ -21,9 +21,13 @@ void excute(char **arr, char *error)
 			write(1, ": 1: ", 6);
 			write(1, arr[0], strlen(arr[0]));
 			write(1, ": not found\n", 12);
+			for (j = 0; arr[j] != NULL; j++)
+				free(arr[j]);
+			free(arr);
 			exit(EXIT_FAILURE);
 		}
 		write(1, "\n", 1);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -43,7 +47,7 @@ void excute(char **arr, char *error)
 
 int main(int argc, char *argv[])
 {
-	char *line, **arr, *token;
+	char *line = NULL, **arr, *token;
 	size_t n = 0;
 	int i = 0;
 	ssize_t l = 0;
