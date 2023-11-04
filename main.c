@@ -2,11 +2,12 @@
 /**
  * excute - excutes the programm
  * @arr: array containing command
+ * @error: program name
  *
  * Return: void
  */
 
-void excute(char **arr)
+void excute(char **arr, char *error)
 {
 	pid_t child;
 	int status, j;
@@ -14,7 +15,14 @@ void excute(char **arr)
 	child = fork();
 	if (child == 0)
 	{
-		execve(arr[0], arr, NULL);
+		if (execve(arr[0], arr, NULL) == -1 && arr[0][0] != ' ')
+		{
+			write(1, error, strlen(error));
+			write(1, ": 1: ", 6);
+			write(1, arr[0], strlen(arr[0]));
+			write(1, ": not found\n", 12);
+			exit(EXIT_FAILURE);
+		}
 		write(1, "\n", 1);
 	}
 	else
@@ -27,17 +35,20 @@ void excute(char **arr)
 }
 /**
  * main - main code
+ * @argc: argument count
+ * @argv: argument vector
  *
  * Return: 0
  */
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	char *line, **arr, *token;
 	size_t n = 0;
 	int i = 0;
 	ssize_t l = 0;
 
+	(void)argc;
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -54,7 +65,7 @@ int main(void)
 			i++;
 		}
 		arr[i] = NULL;
-		excute(arr);
+		excute(arr, argv[0]);
 		i = 0;
 	}
 	free(line);
