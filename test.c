@@ -12,11 +12,11 @@ int is_empty(const char *str)
 	{
 	if (*str != ' ')
 	{
-		return 0;
+		return (0);
 	}
 	str++;
 	}
-	return 1;
+	return (1);
 }
 /**
  * excute - excutes the programm
@@ -39,12 +39,12 @@ int excute(char **arr, char *error)
 	if (path == NULL)
 	{
 		error_msg(arr, error);
-		return(-1);
+		return(0);
 	}
 	else if(access(path, X_OK) != 0)
 	{
 		error_permission(arr, error);
-		return (-1);
+		return (0);
 	}
 	else
 	{	
@@ -54,7 +54,7 @@ int excute(char **arr, char *error)
 			if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
 			{
 				error_msg(arr, error);
-				return (-1);
+				return (0);
 			}
 				write(1, "\n", 1);
 			}
@@ -110,6 +110,11 @@ int main(int argc, char *argv[])
 			token = strtok(NULL, " \n\t");
 		}
 		arr[i] = NULL;
+		if (i == 0)
+		{
+			free(arr);
+			continue;
+		}
 		if (strcmp(arr[0], ex) == 0)
 		{
 			for (j = 0; arr[j] != NULL; j++)

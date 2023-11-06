@@ -64,7 +64,7 @@ int error_msg(char **arr, char *error)
 	for (j = 0; arr[j] != NULL; j++)
 		free(arr[j]);
 	free(arr);
-	return (-1);
+	return (0);
 }
 
 /**
@@ -83,5 +83,5 @@ int error_permission(char **arr, char *error)
 	for (j = 0; arr[j] != NULL; j++)
 		free(arr[j]);
 	free(arr);
-	return (-1);
+	return (0);
 }
