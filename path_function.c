@@ -52,7 +52,7 @@ char *path_function(char *cmnd)
 
 /**
  * error_msg - handle the error message
- * @error:
+ * @error: file name
  * @arr: array of arguments
  * Return: -1
  * 
@@ -72,8 +72,8 @@ int error_msg(char **arr, char *error)
 }
 
 /**
- * error_ - handle the error message
- * @error:
+ * error_permission - handle the error message
+ * @error: file name
  * @arr: array of arguments
  * Return: -1
  * 
