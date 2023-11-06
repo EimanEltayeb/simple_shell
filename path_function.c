@@ -7,7 +7,7 @@
 
 char *path_function(char *cmnd)
 {
-	char *path, *path_test;
+	char *path, *path_test = NULL;
 	char *token_path;
 	int len;
 	struct stat st;
@@ -29,7 +29,7 @@ char *path_function(char *cmnd)
 	while (token_path != NULL)
 	{
 		path_test = malloc(sizeof(char) * (strlen(token_path) + len + 2));
-		path_test[0] = '\0';
+		
 		strcat(path_test, token_path);
 		strcat(path_test, "/");
 		strcat(path_test, cmnd);
