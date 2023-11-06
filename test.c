@@ -39,12 +39,12 @@ int excute(char **arr, char *error)
 	if (path == NULL)
 	{
 		error_msg(arr, error);
-		return(0);
+		return(127);
 	}
 	else if(access(path, X_OK) != 0)
 	{
 		error_permission(arr, error);
-		return (0);
+		return (126);
 	}
 	else
 	{	

@@ -57,10 +57,13 @@ int error_msg(char **arr, char *error)
 {
 	int j;
 
+	for (j = 0; arr[j + 1] != NULL; j++)
+		;
 	write(2, error, strlen(error));
 	write(2, ": 1: ", 6);
 	write(2, arr[0], strlen(arr[0]));
-	write(2, ": not found\n", 12);
+	write(2, ": not found", 11);
+	write(2, "\n", 1);
 	for (j = 0; arr[j] != NULL; j++)
 		free(arr[j]);
 	free(arr);
@@ -79,7 +82,8 @@ int error_permission(char **arr, char *error)
 	int j;
 
 	write(2, error, strlen(error));
-	write(2, ": Permission denied\n", 20);
+	write(2, ": Permission denied", 19);
+	write(2, "\n", 1);
 	for (j = 0; arr[j] != NULL; j++)
 		free(arr[j]);
 	free(arr);
