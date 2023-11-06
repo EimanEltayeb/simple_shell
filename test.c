@@ -1,5 +1,24 @@
 #include "main.h"
 /**
+ * is_empty - checks if string is empty
+ * @str: string to be checked
+ *
+ * Return: 1 if empty 0 if not
+ */
+
+int is_empty(const char *str)
+{
+	while (*str != '\0')
+	{
+	if (*str != ' ')
+	{
+		return 0;
+	}
+	str++;
+	}
+	return 1;
+}
+/**
  * excute - excutes the programm
  * @arr: array containing command
  * @error: program name
@@ -12,16 +31,18 @@ int excute(char **arr, char *error)
 	int status, j;
 	char *path;
 
+	if (arr[0] == NULL || arr[0][0] == '\0')
+	{
+		return (0);
+	}
 	path = path_function(arr[0]);
 	if (path == NULL)
 	{
-		free(path);
 		error_msg(arr, error);
 		return(-1);
 	}
 	else if(access(path, X_OK) != 0)
 	{
-		free(path);
 		error_permission(arr, error);
 		return (-1);
 	}
@@ -32,26 +53,21 @@ int excute(char **arr, char *error)
 		{
 			if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
 			{
-				write(2, error, strlen(error));
-				write(2, ": 1: ", 6);
-				write(2, arr[0], strlen(arr[0]));
-				write(2, ": not found\n", 12);
-				for (j = 0; arr[j] != NULL; j++)
-					free(arr[j]);
-				free(arr);
+				error_msg(arr, error);
 				return (-1);
 			}
-			write(1, "\n", 1);
-		}
-		else
-		{
-			wait(&status);
-		}
+				write(1, "\n", 1);
+			}
+			else
+			{
+				wait(&status);
+			}
+			free(path);
 		for (j = 0; arr[j] != NULL; j++)
 			free(arr[j]);
 		free(arr);
-		return (0);
-	}
+		}
+	return(0);
 }
 /**
  * main - main code
@@ -78,7 +94,7 @@ int main(int argc, char *argv[])
 		{
 			break;
 		}
-		if (l == 1)
+		if (l == 1 || (l == 2 && line[0] == '\n'))
 		{
 			continue;
 		}

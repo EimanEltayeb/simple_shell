@@ -14,8 +14,7 @@ char *path_function(char *cmnd)
 
 	if (stat(cmnd, &st) == 0)
 	{
-		path_test = malloc(sizeof(cmnd));
-		path_test = cmnd;
+		path_test = strdup(cmnd);
 		return (path_test);
 	}
 	len = strlen(cmnd);
@@ -29,16 +28,13 @@ char *path_function(char *cmnd)
 	while (token_path != NULL)
 	{
 		path_test = malloc(sizeof(char) * (strlen(token_path) + len + 2));
-
-		strcat(path_test, token_path);
+		strcpy(path_test, token_path);
 		strcat(path_test, "/");
 		strcat(path_test, cmnd);
-		strcat(path_test, "\0");
-
 		if (stat(path_test, &st) == 0)
 		{
 			free(cpy_path);
-		return (path_test);
+			return (path_test);
 		}
 		else
 		{

@@ -12,5 +12,6 @@
 char *path_function(char *cmnd);
 int error_msg(char **arr, char *error);
 int error_permission(char **arr, char *error);
+int is_empty(const char *str);
 
 #endif
