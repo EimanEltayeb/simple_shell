@@ -54,7 +54,7 @@ int excute(char **arr, char *error)
 			if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
 			{
 				error_msg(arr, error);
-				return (0);
+				exit(127);
 			}
 				write(1, "\n", 1);
 			}

@@ -60,7 +60,7 @@ int error_msg(char **arr, char *error)
 	for (j = 0; arr[j + 1] != NULL; j++)
 		;
 	write(2, error, strlen(error));
-	write(2, ": 1: ", 6);
+	write(2, ": 1: ", 5);
 	write(2, arr[0], strlen(arr[0]));
 	write(2, ": not found", 11);
 	write(2, "\n", 1);
