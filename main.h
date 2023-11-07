@@ -29,7 +29,8 @@ int error_permission(char **arr, char *error);
 int is_empty(const char *str);
 char *_getenv(const char *variable, env_list *head);
 int built(char *cmnd);
-
+void free_memory(char **arr);
+int excute(char **arr, char *error);
 
 
 

@@ -19,6 +19,56 @@ int is_empty(const char *str)
 	return (1);
 }
 /**
+ * command_line - excutes command
+ * @result: result.
+ * @program: program name
+ * @line: line used
+ * Return: result
+ */
+int command_line(int result, char *program, char *line)
+{
+	int i = 0;
+	ssize_t l = 0;
+	size_t n = 0;
+	char **arr, *token, *ex = "exit", *env = "env";
+
+	while (1)
+	{
+		if (isatty(STDIN_FILENO))
+			write(1, "$ ", 2);
+		l = getline(&line, &n, stdin);
+		if (l == -1)
+			break;
+		if (l == 1 || (l == 2 && line[0] == '\n'))
+			continue;
+		arr = (char **)malloc(n * sizeof(char *));
+		token = strtok(line, " \n\t");
+		while (token != NULL)
+		{
+			arr[i++] = strdup(token);
+			token = strtok(NULL, " \n\t");
+		}
+		arr[i] = NULL;
+		if (i == 0)
+		{
+			free(arr);
+			continue;
+		}
+		if (strcmp(arr[0], ex) == 0)
+		{
+			free_memory(arr);
+			break;
+		}
+		if (strcmp(arr[0], env) == 0)
+		{
+			built(env);
+			break; }
+		result = excute(arr, program);
+		i = 0; }
+	if (line != NULL)
+		free(line);
+	return (result); }
+/**
  * excute - excutes the programm
  * @arr: array containing command
  * @error: program name
@@ -92,41 +142,10 @@ void free_memory(char **arr)
 
 int main(__attribute__((unused))int argc, char *argv[])
 {
-	char *line = NULL, **arr, *token, *ex = "exit";
-	size_t n = 0;
-	int i = 0, result = 0;
-	ssize_t l = 0;
+	int result = 0;
+	char *line = NULL;
 
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(1, "$ ", 2);
-		l = getline(&line, &n, stdin);
-		if (l == -1)
-			break;
-		if (l == 1 || (l == 2 && line[0] == '\n'))
-			continue;
-		arr = (char **)malloc(n * sizeof(char *));
-		token = strtok(line, " \n\t");
-		while (token != NULL)
-		{
-			arr[i++] = strdup(token);
-			token = strtok(NULL, " \n\t");
-		}
-		arr[i] = NULL;
-		if (i == 0)
-		{
-			free(arr);
-			continue;
-		}
-		if (strcmp(arr[0], ex) == 0)
-		{
-			free_memory(arr);
-			break;
-		}
-		result = excute(arr, argv[0]);
-		i = 0;
-	}
+	result = command_line(result, argv[0], line);
 	if (line != NULL)
 		free(line);
 	if (!(isatty(STDIN_FILENO)) && result != 0)
