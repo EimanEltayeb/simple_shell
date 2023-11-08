@@ -43,11 +43,11 @@ int command_line(int result, char *program, char *line)
 		if (l == 1 || (l == 2 && line[0] == '\n'))
 			continue;
 		arr = (char **)malloc(n * sizeof(char *));
-		token = strtok(line, " \n\t");
+		token = _strtok(line, " \n\t");
 		while (token != NULL)
 		{
 			arr[i++] = strdup(token);
-			token = strtok(NULL, " \n\t");
+			token = _strtok(NULL, " \n\t");
 		}
 		arr[i] = NULL;
 		if (i == 0)

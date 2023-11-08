@@ -28,9 +28,10 @@ int error_msg(char **arr, char *error);
 int error_permission(char **arr, char *error);
 int is_empty(const char *str);
 char *_getenv(const char *variable, env_list *head);
-int built(char *cmnd);
+int built(char **arr);
 void free_memory(char **arr);
 int excute(char **arr, char *error);
+char *_strtok(char *str, const char *delim);
 
 
 
