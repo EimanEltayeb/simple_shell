@@ -25,7 +25,7 @@ char *path_function(char *cmnd)
 		return (NULL);
 	}
 	cpy_path = strdup(path);
-	token_path = strtok(cpy_path, ":");
+	token_path = _strtok(cpy_path, ":");
 	while (token_path != NULL)
 	{
 		path_test = malloc(sizeof(char) * (strlen(token_path) + len + 2));
@@ -40,7 +40,7 @@ char *path_function(char *cmnd)
 		else
 		{
 		free(path_test);
-		token_path = strtok(NULL, ":");
+		token_path = _strtok(NULL, ":");
 		}
 	}
 		free(cpy_path);

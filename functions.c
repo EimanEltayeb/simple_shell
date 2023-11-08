@@ -10,7 +10,7 @@
 
 char *_strtok(char *str, const char *delim)
 {
-	static char *save = NULL;
+	static char *save;
 	char *token = NULL;
 
 	if (str != NULL)

@@ -22,7 +22,7 @@
 }*/
 /**
  * envlist_free - free the envlist
- * 
+ *
 */
 int envlist_free(env_list *head)
 {

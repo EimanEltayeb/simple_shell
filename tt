@@ -1,0 +1,20 @@
+#include "main.h"
+char *comment(char *line)
+{
+	char *token_com, *line_cpy;
+	
+line_cpy = strdup(line);
+	token_com = strtok(line_cpy, "#");
+	return (token_com);
+}
+int main(void)
+{
+char *tok, *x;
+x = strdup("hello comment");
+
+tok = comment(x);
+printf("%s\n", tok);
+free(tok);
+free(x);
+return (0);
+}
