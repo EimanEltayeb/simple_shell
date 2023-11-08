@@ -34,6 +34,7 @@ int command_line(int result, char *program, char *line)
 
 	while (1)
 	{
+		i = 0;
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
 		l = getline(&line, &n, stdin);
@@ -56,15 +57,14 @@ int command_line(int result, char *program, char *line)
 		}
 		if (strcmp(arr[0], ex) == 0)
 		{
-			free_memory(arr);
+			result = built(arr);
 			break;
 		}
 		if (strcmp(arr[0], env) == 0)
 		{
-			built(env);
-			break; }
-		result = excute(arr, program);
-		i = 0; }
+			result = built(arr);
+			continue; }
+		result = excute(arr, program); }
 	if (line != NULL)
 		free(line);
 	return (result); }

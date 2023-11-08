@@ -70,26 +70,65 @@ char *_getenv(const char *variable, env_list *head)
 	}
 	return (NULL);
 }
-
 /**
  * built - a function that checks built-in fnction
+ * @arr: argv
+ * Return: exit status
 */
-int built(char *cmnd)
+int built(char **arr)
 {
-	int i = 0, len = 0;
-	char *en, **env = environ;
-	en = "env"; 
-	if (strcmp(en, cmnd) == 0)
+	int i = 0, len = 0, n;
+	char *en = "env", **env = environ, *ex = "exit";
+
+	if (strcmp(en, arr[0]) == 0)
 	{
-	while (env[i] != NULL)
+		while (env[i] != NULL)
+		{
+			len = strlen(env[i]);
+			write(1, env[i], len);
+			write(1, "\n", 1);
+			i++;
+		}
+		free_memory(arr);
+		return (0);
+	}
+	else if (strcmp(ex, arr[0]) == 0)
 	{
-		len = strlen(env[i]);
-		write(1, env[i], len + 1);
-		write(1, "\n", 1);
-		i++;
+		if (arr[1] == NULL)
+		{
+			free_memory(arr);
+			return (0);
+		}
+		if (atoi(arr[1]) < 1)
+		{
+			write(2, "./hsh: 1: exit: Illegal number: ", 32);
+			write(2, arr[1], strlen(arr[1]));
+			write(2, "\n", 1);
+			free_memory(arr);
+			return (2); }
+
+				n = atoi(arr[1]);
+				if (n > 232)
+					n = 232;
+				free_memory(arr);
+				return (n);
 	}
-	return (0);
-	}
-	else
+
+	free_memory(arr);
 	return (-1);
+}
+
+/**
+ * comment - remove comments from command line
+ * @line: command line
+ * Return: line without comment.
+ * 
+*/
+char *comment(char *line)
+{
+	char *token_com, *line_cpy;
+	
+line_cpy = strdup(line);
+	token_com = strtok(line_cpy, "#");
+	return (token_com);
 }

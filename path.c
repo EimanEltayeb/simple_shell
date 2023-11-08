@@ -7,11 +7,10 @@
 
 char *path_function(char *cmnd)
 {
-	char *path = NULL, *path_test = NULL, *cpy_path = NULL, **env = environ;
-	char *token_path = NULL;
+	char *path = NULL, *path_test = NULL, *cpy_path = NULL, *token_path = NULL;
 	int len;
 	struct stat st;
-	env_list *head;
+	/*env_list *head;*/
 
 	if (stat(cmnd, &st) == 0)
 	{
@@ -19,8 +18,8 @@ char *path_function(char *cmnd)
 		return (path_test);
 	}
 	len = strlen(cmnd);
-	head = env_struct(env);
-	path = _getenv("PATH", head);
+	/*head = env_struct(env);*/
+	path = getenv("PATH");
 	if (path == NULL)
 	{
 		return (NULL);
