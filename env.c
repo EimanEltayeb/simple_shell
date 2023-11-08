@@ -122,13 +122,12 @@ int built(char **arr)
  * comment - remove comments from command line
  * @line: command line
  * Return: line without comment.
- * 
-*/
+ */
 char *comment(char *line)
 {
 	char *token_com, *line_cpy;
-	
-line_cpy = strdup(line);
+
+	line_cpy = strdup(line);
 	token_com = strtok(line_cpy, "#");
 	return (token_com);
 }
