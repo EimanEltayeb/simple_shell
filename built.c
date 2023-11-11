@@ -13,28 +13,43 @@ int _cd(char **arr)
 	{
 		path = getenv("HOME");
 		result = chdir(path);
-		if (setenv("PWD", path, 1) != 0)
+		if (result != 0)
 		{
 			write(2, "./hsh: 1: ", 9);
-			perror("chdir");
+			write(2, "cd: can't cd to ", 16);
+			write(2, path, _strlen(path));
+			write(2, "\n", 1);
 		}
+		setenv("PWD", path, 1);
 		return (result);
 	}
-	if (strcmp(arr[1], dash) == 0)
+	else if (_strcmp(arr[1], dash) == 0)
 	{
 		path = getenv("OLDPWD");
+		result = chdir(path);
 		if (setenv("PWD", path, 1) != 0)
 		{
 			write(2, "./hsh: 1: ", 9);
-			perror("chdir");
+			write(2, "cd: can't cd to ", 16);
+			write(2, arr[1], _strlen(path));
+			write(2, "\n", 1);
+		}
+		else
+		{
+			write(1, path, _strlen(path));
 		}
 
 	}
-	result = chdir(arr[1]);
-	if (result != 0)
+	else
 	{
-		write(2, "./hsh: 1: ", 9);
-		perror("chdir");
+		result = chdir(arr[1]);
+		if (result != 0)
+		{
+			write(2, "./hsh: 1: ", 9);
+			write(2, "cd: can't cd to ", 16);
+			write(2, arr[1], _strlen(path));
+			write(2, "\n", 1);
+		}
 	}
 	return (result);
 }
@@ -49,12 +64,12 @@ int builtin(char **arr)
 	int result;
 	char *en = "env", *ccd = "cd";
 
-	if (strcmp(arr[0], en) == 0)
+	if (_strcmp(arr[0], en) == 0)
 	{
 		result = built(arr);
 		return (result);
 	}
-	if (strcmp(arr[0], ccd) == 0)
+	if (_strcmp(arr[0], ccd) == 0)
 	{
 		result = _cd(arr);
 		free_memory(arr);
