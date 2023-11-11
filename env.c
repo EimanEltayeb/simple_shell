@@ -125,9 +125,10 @@ int built(char **arr)
  */
 char *comment(char *line)
 {
-	char *token_com, *line_cpy;
+	char *token_com, *hash = "#";
 
-	line_cpy = strdup(line);
-	token_com = strtok(line_cpy, "#");
+	if (line[0] == '#')
+		return (hash);
+	token_com = _strtok(line, "#");
 	return (token_com);
 }

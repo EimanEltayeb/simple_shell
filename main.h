@@ -32,6 +32,9 @@ int built(char **arr);
 void free_memory(char **arr);
 int excute(char **arr, char *error);
 char *_strtok(char *str, const char *delim);
+int _cd(char **arr);
+char *comment(char *line);
+int builtin(char **arr);
 
 
 

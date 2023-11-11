@@ -22,47 +22,48 @@ int is_empty(const char *str)
  * command_line - excutes command
  * @result: result.
  * @program: program name
- * @line: line used
+ * @line0: line used
  * Return: result
  */
-int command_line(int result, char *program, char *line)
+int command_line(int result, char *program, char *line0)
+
 {
 	int i = 0;
 	ssize_t l = 0;
 	size_t n = 0;
-	char **arr, *token, *ex = "exit", *env = "env";
+	char **arr, *token, *ex = "exit", *en = "env", *line, *hash = "#", *cd = "cd";
 
 	while (1)
 	{
 		i = 0;
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
-		l = getline(&line, &n, stdin);
+		l = getline(&line0, &n, stdin);
 		if (l == -1)
 			break;
-		if (l == 1 || (l == 2 && line[0] == '\n'))
+		if (l == 1 || (l == 2 && line0[0] == '\n'))
 			continue;
+		line = comment(line0);
+		if (strcmp(line, hash) == 0)
+		continue;
 		arr = (char **)malloc(n * sizeof(char *));
 		token = _strtok(line, " \n\t");
 		while (token != NULL)
 		{
 			arr[i++] = strdup(token);
-			token = _strtok(NULL, " \n\t");
-		}
+			token = _strtok(NULL, " \n\t"); }
 		arr[i] = NULL;
 		if (i == 0)
 		{
 			free(arr);
-			continue;
-		}
+			continue; }
 		if (strcmp(arr[0], ex) == 0)
 		{
 			result = built(arr);
-			break;
-		}
-		if (strcmp(arr[0], env) == 0)
+			break; }
+		if ((strcmp(arr[0], en) == 0) || (strcmp(arr[0], cd) == 0))
 		{
-			result = built(arr);
+			result = builtin(arr);
 			continue; }
 		result = excute(arr, program); }
 	if (line != NULL)
@@ -87,36 +88,27 @@ int excute(char **arr, char *error)
 	if (path == NULL)
 	{
 		error_msg(arr, error);
-		return (127);
-	}
+		return (127); }
 	else if (access(path, X_OK) != 0)
 	{
 		error_permission(arr, error);
-		return (2);
-	}
-	else
+		return (2); }
+	child = fork();
+	if (child == 0)
 	{
-		child = fork();
-		if (child == 0)
+		if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
 		{
-			if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
-			{
-				error_msg(arr, error);
-				return (127);
-			}
-				write(1, "\n", 1);
-			}
-			else
-			{
-				wait(&status);
-			}
-			free(path);
-		for (j = 0; arr[j] != NULL; j++)
-			free(arr[j]);
-		free(arr);
-		}
-	return (0);
-}
+			error_msg(arr, error);
+			return (127); }
+			write(1, "\n", 1); }
+		else
+		{
+			wait(&status); }
+		free(path);
+	for (j = 0; arr[j] != NULL; j++)
+		free(arr[j]);
+	free(arr);
+	return (0); }
 /**
  * free_memory - frees memory
  * @arr: array to be freed
