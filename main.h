@@ -27,7 +27,7 @@ char *path_function(char *cmnd);
 int error_msg(char **arr, char *error);
 int error_permission(char **arr, char *error);
 int is_empty(const char *str);
-char *_getenv(const char *variable, env_list *head);
+char *_getenv(char *variable, env_list *head);
 int built(char **arr);
 void free_memory(char **arr);
 int excute(char **arr, char *error);
@@ -35,7 +35,10 @@ char *_strtok(char *str, const char *delim);
 int _cd(char **arr);
 char *comment(char *line);
 int builtin(char **arr);
-
-
+int _strlen(char *s);
+char *_strcat(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+char *_strdup(char *str);
+int _atoi(char *s);
 
 #endif
