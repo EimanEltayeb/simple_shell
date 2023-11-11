@@ -8,9 +8,16 @@
 */
 /*int _setenv(const char *name, const char *value, int overwrite)
 {
+	int i = 0;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (strcmp(name, environ[i]) == 0)
+
+	}
 	return (0);
-}
-*/
+}*/
+
 /**
  * _unsetenv - deletes the variable name from env
  * @name: variable name
