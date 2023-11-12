@@ -11,11 +11,8 @@ int _setenv(char **arr)
 	result = setenv(arr[1], arr[2], 1);
 	if (result == 0)
 		return (0);
-	else
-	{
-		perror("setenv");
-		return (2);
-	}
+	perror("setenv");
+	return (2);
 }
 
 /**
@@ -26,6 +23,7 @@ int _setenv(char **arr)
 int _unsetenv(char **arr)
 {
 	int result;
+
 	result = unsetenv(arr[1]);
 	if (result == 0)
 	return (0);

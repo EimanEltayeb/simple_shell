@@ -41,7 +41,7 @@ char *_strtok(char *str, const char *delim)
  * _strcpy - a function to copy a string
  * @dest: destination string
  * @src: source string
- * Return: string 
+ * Return: string
 */
 char *_strcpy(char *dest, char *src)
 {
