@@ -1,32 +1,40 @@
 #include "main.h"
 /**
  * _setenv - add a variable to environment.
- * @name: variable name
- * @value: variable value
- * @overwrite: overwrite status
+ * @arr: array
  * Return: int
 */
-/*int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(char **arr)
 {
-	int i = 0;
+	int result;
 
-	for (i = 0; environ[i] != NULL; i++)
+	result = setenv(arr[1], arr[2], 1);
+	if (result == 0)
+		return (0);
+	else
 	{
-		if (strcmp(name, environ[i]) == 0)
-
+		perror("setenv");
+		return (2);
 	}
-	return (0);
-}*/
+}
 
 /**
  * _unsetenv - deletes the variable name from env
- * @name: variable name
+ * @arr: array
  * Return: int
 */
-/*int _unsetenv(const char *name)
+int _unsetenv(char **arr)
 {
+	int result;
+	result = unsetenv(arr[1]);
+	if (result == 0)
 	return (0);
-}*/
+	else
+	{
+		perror("unset");
+		return (2);
+	}
+}
 /**
  * envlist_free - free the envlist
  *

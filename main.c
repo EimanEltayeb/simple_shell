@@ -31,7 +31,7 @@ int command_line(int result, char *program, char *line0)
 	int i = 0;
 	ssize_t l = 0;
 	size_t n = 0;
-	char **arr, *token, *ex = "exit", *en = "env", *line, *hash = "#", *cd = "cd";
+	char **arr, *token, *ex = "exit", *line, *hash = "#";
 
 	while (1)
 	{
@@ -44,24 +44,24 @@ int command_line(int result, char *program, char *line0)
 		if (l == 1 || (l == 2 && line0[0] == '\n'))
 			continue;
 		line = comment(line0);
-		if (strcmp(line, hash) == 0)
+		if (_strcmp(line, hash) == 0)
 		continue;
 		arr = (char **)malloc(n * sizeof(char *));
 		token = _strtok(line, " \n\t");
 		while (token != NULL)
 		{
-			arr[i++] = strdup(token);
+			arr[i++] = _strdup(token);
 			token = _strtok(NULL, " \n\t"); }
 		arr[i] = NULL;
 		if (i == 0)
 		{
 			free(arr);
 			continue; }
-		if (strcmp(arr[0], ex) == 0)
+		if (_strcmp(arr[0], ex) == 0)
 		{
 			result = built(arr);
 			break; }
-		if ((strcmp(arr[0], en) == 0) || (strcmp(arr[0], cd) == 0))
+		if (check_built(arr) == 1)
 		{
 			result = builtin(arr);
 			continue; }

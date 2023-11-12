@@ -63,20 +63,41 @@ void error_cd(char **arr)
 */
 int builtin(char **arr)
 {
-	int result;
-	char *en = "env", *ccd = "cd";
+	int result = 0;
+	char *en = "env", *ccd = "cd", *set = "setenv", *unset = "unsetenv";
 
 	if (_strcmp(arr[0], en) == 0)
 	{
 		result = built(arr);
-		return (result);
 	}
-	if (_strcmp(arr[0], ccd) == 0)
+	else if (_strcmp(arr[0], ccd) == 0)
 	{
 		result = _cd(arr);
-		free_memory(arr);
-		return (result);
 	}
+	else if (_strcmp(arr[0], set) == 0)
+	{
+		result =  _setenv(arr);
+	}
+	else if (_strcmp(arr[0], unset) == 0)
+	{
+		result = _unsetenv(arr);
+	}
+	free_memory(arr);
+	return (result);
+}
+/**
+ * check_built - check if built ins are true
+ * @arr: array
+ * Return: int
+*/
+int check_built(char **arr)
+{
+	char *en = "env", *cd = "cd", *set = "setenv", *unset = "unsetenv";
+
+	if ((_strcmp(arr[0], en) == 0) || (_strcmp(arr[0], cd) == 0))
+		return (1);
+	else if ((_strcmp(arr[0], set) == 0) || (_strcmp(arr[0], unset) == 0))
+		return (1);
 	else
-	return (0);
+		return (0);
 }

@@ -41,5 +41,9 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 int _atoi(char *s);
 void error_cd(char **arr);
+char *_strcpy(char *dest, char *src);
+int check_built(char **arr);
+int _setenv(char **arr);
+int _unsetenv(char **arr);
 
 #endif

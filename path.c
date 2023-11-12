@@ -14,24 +14,24 @@ char *path_function(char *cmnd)
 
 	if (stat(cmnd, &st) == 0)
 	{
-		path_test = strdup(cmnd);
+		path_test = _strdup(cmnd);
 		return (path_test);
 	}
-	len = strlen(cmnd);
+	len = _strlen(cmnd);
 	/*head = env_struct(env);*/
 	path = getenv("PATH");
 	if (path == NULL)
 	{
 		return (NULL);
 	}
-	cpy_path = strdup(path);
+	cpy_path = _strdup(path);
 	token_path = _strtok(cpy_path, ":");
 	while (token_path != NULL)
 	{
-		path_test = malloc(sizeof(char) * (strlen(token_path) + len + 2));
-		strcpy(path_test, token_path);
-		strcat(path_test, "/");
-		strcat(path_test, cmnd);
+		path_test = malloc(sizeof(char) * (_strlen(token_path) + len + 2));
+		_strcpy(path_test, token_path);
+		_strcat(path_test, "/");
+		_strcat(path_test, cmnd);
 		if (stat(path_test, &st) == 0)
 		{
 			free(cpy_path);
@@ -60,9 +60,9 @@ int error_msg(char **arr, char *error)
 
 	for (j = 0; arr[j + 1] != NULL; j++)
 		;
-	write(2, error, strlen(error));
+	write(2, error, _strlen(error));
 	write(2, ": 1: ", 5);
-	write(2, arr[0], strlen(arr[0]));
+	write(2, arr[0], _strlen(arr[0]));
 	write(2, ": not found", 11);
 	write(2, "\n", 1);
 	for (j = 0; arr[j] != NULL; j++)
@@ -82,7 +82,7 @@ int error_permission(char **arr, char *error)
 {
 	int j;
 
-	write(2, error, strlen(error));
+	write(2, error, _strlen(error));
 	write(2, ": Permission denied", 19);
 	write(2, "\n", 1);
 	for (j = 0; arr[j] != NULL; j++)

@@ -54,7 +54,7 @@ return (head);
  * @head: env_list pointer
  * Return: value of the variable
 */
-char *_getenv(const char *variable, env_list *head)
+char *_getenv(char *variable, env_list *head)
 {
 	env_list *temp;
 	int x = 0;
@@ -89,7 +89,6 @@ int built(char **arr)
 			write(1, "\n", 1);
 			i++;
 		}
-		free_memory(arr);
 		return (0);
 	}
 	else if (strcmp(ex, arr[0]) == 0)
@@ -113,8 +112,6 @@ int built(char **arr)
 				free_memory(arr);
 				return (n);
 	}
-
-	free_memory(arr);
 	return (-1);
 }
 
