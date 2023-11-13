@@ -26,16 +26,13 @@ int is_empty(const char *str)
  * Return: result
  */
 int command_line(int result, char *program, char *line0)
-
 {
-	int i = 0;
 	ssize_t l = 0;
 	size_t n = 0;
-	char **arr, *token, *ex = "exit", *line, *hash = "#";
+	char **arr, *ex = "exit", *line, *hash = "#";
 
 	while (1)
 	{
-		i = 0;
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
 		l = getline(&line0, &n, stdin);
@@ -46,17 +43,9 @@ int command_line(int result, char *program, char *line0)
 		line = comment(line0);
 		if (_strcmp(line, hash) == 0)
 		continue;
-		arr = (char **)malloc(n * sizeof(char *));
-		token = _strtok(line, " \n\t");
-		while (token != NULL)
-		{
-			arr[i++] = _strdup(token);
-			token = _strtok(NULL, " \n\t"); }
-		arr[i] = NULL;
-		if (i == 0)
-		{
-			free(arr);
-			continue; }
+		arr = commandline_cont(arr, n, line);
+		if (arr == NULL)
+			continue;
 		if (_strcmp(arr[0], ex) == 0)
 		{
 			result = built(arr);
