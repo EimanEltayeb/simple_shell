@@ -35,23 +35,3 @@ int _unsetenv(char **arr)
 		return (2);
 	}
 }
-/**
- * envlist_free - free the envlist
- * @head: env list head pointer
- * Return: 0
- *
-*/
-int envlist_free(env_list *head)
-{
-	env_list *temp;
-
-	while (temp != NULL)
-	{
-		temp = head;
-		head = head->next;
-		free(temp->var);
-		free(temp->value);
-		free(temp);
-	}
-	return (0);
-}

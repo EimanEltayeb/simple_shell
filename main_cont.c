@@ -21,6 +21,7 @@ char **commandline_cont(char **arr, size_t n, char *line)
 		if (i == 0)
 		{
 			free(arr);
+			return (NULL);
 		}
 	return (arr);
 }

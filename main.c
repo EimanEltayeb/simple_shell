@@ -23,9 +23,10 @@ int is_empty(const char *str)
  * @result: result.
  * @program: program name
  * @line0: line used
+ * @env: environ
  * Return: result
  */
-int command_line(int result, char *program, char *line0)
+int command_line(int result, char *program, char *line0, char **env)
 {
 	ssize_t l = 0;
 	size_t n = 0;
@@ -48,13 +49,13 @@ int command_line(int result, char *program, char *line0)
 			continue;
 		if (_strcmp(arr[0], ex) == 0)
 		{
-			result = built(arr);
+			result = built(arr, env);
 			break; }
 		if (check_built(arr) == 1)
 		{
-			result = builtin(arr);
+			result = builtin(arr, env);
 			continue; }
-		result = excute(arr, program); }
+		result = excute(arr, program, env); }
 	if (line != NULL)
 		free(line);
 	return (result); }
@@ -62,10 +63,10 @@ int command_line(int result, char *program, char *line0)
  * excute - excutes the programm
  * @arr: array containing command
  * @error: program name
- *
+ * @env: environ
  * Return: void
  */
-int excute(char **arr, char *error)
+int excute(char **arr, char *error, char **env)
 {
 	pid_t child;
 	int status, j;
@@ -85,7 +86,7 @@ int excute(char **arr, char *error)
 	child = fork();
 	if (child == 0)
 	{
-		if (execve(path, arr, NULL) == -1 && arr[0][0] != ' ')
+		if (execve(path, arr, env) == -1 && arr[0][0] != ' ')
 		{
 			error_msg(arr, error);
 			return (127); }
@@ -117,16 +118,17 @@ void free_memory(char **arr)
  * main - main code
  * @argc: argument count
  * @argv: argument vector
+ * @env: environ
  *
  * Return: 0
  */
 
-int main(__attribute__((unused))int argc, char *argv[])
+int main(__attribute__((unused))int argc, char *argv[], char **env)
 {
 	int result = 0;
 	char *line = NULL;
 
-	result = command_line(result, argv[0], line);
+	result = command_line(result, argv[0], line, env);
 	if (line != NULL)
 		free(line);
 	if (!(isatty(STDIN_FILENO)) && result != 0)

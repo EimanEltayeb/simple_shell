@@ -59,16 +59,17 @@ void error_cd(char **arr)
 /**
  * builtin - handle builtin commands
  * @arr: command line arguments
+ * @env: environ
  * Return: result.
 */
-int builtin(char **arr)
+int builtin(char **arr, char **env)
 {
 	int result = 0;
 	char *en = "env", *ccd = "cd", *set = "setenv", *unset = "unsetenv";
 
 	if (_strcmp(arr[0], en) == 0)
 	{
-		result = built(arr);
+		result = built(arr, env);
 	}
 	else if (_strcmp(arr[0], ccd) == 0)
 	{
