@@ -7,7 +7,7 @@
 int _cd(char **arr)
 {
 	int result = 0;
-	char *path = NULL, *old = NULL, *now = NULL, *dash = "-";
+	char *path = NULL, *old = NULL, *now = NULL, *dash = "-", buf[100];
 
 	now = _strdup(getenv("PWD"));
 	old = _strdup(getenv("OLDPWD"));
@@ -37,7 +37,11 @@ int _cd(char **arr)
 		path = arr[1];
 		result = chdir(path);
 		if (result != 0)
-			error_cd(arr);
+		{	error_cd(arr);}
+
+		path = getcwd(buf, sizeof(buf));
+		if (path == NULL)
+			{perror("getcwd");}
 		setenv("PWD", path, 1);
 		setenv("OLDPWD", now, 1);
 	}
