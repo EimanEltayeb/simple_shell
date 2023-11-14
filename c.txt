@@ -1,0 +1,2 @@
+cat main.h
+cat string.c

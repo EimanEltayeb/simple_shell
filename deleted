@@ -1,0 +1,109 @@
+/**
+ * struct env_list - struct of environment
+ * @var: the variable of env
+ * @value: the value of the variable
+ * @next: the pointer to the next list
+*/
+extern char **environ;
+typedef struct env_list
+{
+	char *var;
+	char *value;
+	struct env_list *next;
+} env_list;
+
+env_list *env_struct(char **env);
+char *_getenv(char *variable, env_list *head);
+
+/**
+ * envlist_free - free the envlist
+ * @head: env list head pointer
+ * Return: 0
+ *
+*/
+int envlist_free(env_list *head)
+{
+	env_list *temp;
+
+	while (temp != NULL)
+	{
+		temp = head;
+		head = head->next;
+		free(temp->var);
+		free(temp->value);
+		free(temp);
+	}
+	return (0);
+}
+
+/**
+ * env_struct - struct a list for environment
+ * @env: environment
+ * Return: header pointer.
+*/
+env_list *env_struct(char **env)
+{
+	int i;
+	env_list *new = NULL, *head = NULL, *last = NULL;
+	char *token = NULL, *env_cpy = NULL;
+
+	for (i = 0; env[i] != NULL; i++)
+	{
+		env_cpy = strdup(env[i]);
+		if (env_cpy == NULL)
+			return (NULL);
+		token = strtok(env_cpy, "=");
+		if (token != NULL)
+		{
+			new = malloc(sizeof(env_list));
+			if (new == NULL)
+			{
+				free(env_cpy);
+				return (NULL);
+			}
+			new->var = strdup(token);
+			token = strtok(NULL, "=");
+			if (token != NULL)
+				new->value = strdup(token);
+			else
+				new->value = NULL;
+			new->next = NULL;
+			if (head == NULL)
+			{
+				head = new;
+				last = new;
+			}
+			else
+			{
+				last->next = new;
+				last = new;
+			}
+		}
+		free(env_cpy);
+	}
+
+return (head);
+}
+
+/**
+ * _getenv - return the value of a variable from env_list
+ * @variable: the variable
+ * @head: env_list pointer
+ * Return: value of the variable
+*/
+char *_getenv(char *variable, env_list *head)
+{
+	env_list *temp;
+	int x = 0;
+
+	temp = head;
+	while (temp != NULL)
+	{
+		x = strcmp(temp->var, variable);
+		if (x == 0)
+		return (temp->value);
+		else
+		temp = temp->next;
+	}
+	return (NULL);
+}

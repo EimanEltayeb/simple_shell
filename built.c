@@ -37,14 +37,12 @@ int _cd(char **arr)
 		path = arr[1];
 		result = chdir(path);
 		if (result != 0)
-		{	error_cd(arr);}
-
+			error_cd(arr);
 		path = getcwd(buf, sizeof(buf));
 		if (path == NULL)
-			{perror("getcwd");}
+			perror("getcwd");
 		setenv("PWD", path, 1);
-		setenv("OLDPWD", now, 1);
-	}
+		setenv("OLDPWD", now, 1); }
 	free(now);
 	free(old);
 	return (result);
