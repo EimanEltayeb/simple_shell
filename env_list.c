@@ -2,6 +2,7 @@
 /**
  * _setenv - add a variable to environment.
  * @arr: array
+ * @env: environ
  * Return: int
 */
 int _setenv(char **arr, char **env)
@@ -21,6 +22,7 @@ int _setenv(char **arr, char **env)
 /**
  * _unsetenv - deletes the variable name from env
  * @arr: array
+ * @env: environ
  * Return: int
 */
 int _unsetenv(char **arr, char **env)
