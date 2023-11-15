@@ -2,13 +2,15 @@
 /**
  * _cd - change directory function
  * @arr: the arguments array
+ * @env: environ
  * Return: int
 */
-int _cd(char **arr)
+int _cd(char **arr, char **env)
 {
 	int result = 0;
 	char *path = NULL, *old = NULL, *now = NULL, *dash = "-", buf[100];
 
+	(void)env;
 	now = _strdup(getenv("PWD"));
 	old = _strdup(getenv("OLDPWD"));
 	if (arr[1] == NULL)
@@ -45,8 +47,7 @@ int _cd(char **arr)
 		setenv("OLDPWD", now, 1); }
 	free(now);
 	free(old);
-	return (result);
-}
+	return (result); }
 /**
  * error_cd - handles the cd errors
  * @arr: array of command
@@ -75,15 +76,15 @@ int builtin(char **arr, char **env)
 	}
 	else if (_strcmp(arr[0], ccd) == 0)
 	{
-		result = _cd(arr);
+		result = _cd(arr, env);
 	}
 	else if (_strcmp(arr[0], set) == 0)
 	{
-		result =  _setenv(arr);
+		result =  _setenv(arr, env);
 	}
 	else if (_strcmp(arr[0], unset) == 0)
 	{
-		result = _unsetenv(arr);
+		result = _unsetenv(arr, env);
 	}
 	free_memory(arr);
 	return (result);
