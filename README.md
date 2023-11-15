@@ -1,1 +1,1 @@
- thi simple_shell project
+Simple shell project 
